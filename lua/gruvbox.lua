@@ -905,6 +905,7 @@ local function get_groups()
     IlluminatedWordRead = { link = "LspReferenceRead" },
     IlluminatedWordWrite = { link = "LspReferenceWrite" },
     TSRainbowRed = { fg = colors.red },
+    Delimiter = { fg = colors.orange },
     TSRainbowOrange = { fg = colors.orange },
     TSRainbowYellow = { fg = colors.yellow },
     TSRainbowGreen = { fg = colors.green },
