@@ -29,19 +29,21 @@ local Gruvbox = {}
 ---@field nocombine boolean?
 
 ---@class GruvboxConfig
----@field terminal_colors boolean?
----@field undercurl boolean?
----@field underline boolean?
 ---@field bold boolean?
----@field italic ItalicConfig?
----@field strikethrough boolean?
 ---@field contrast Contrast?
+---@field dim_inactive boolean?
+---@field inverse boolean?
 ---@field invert_selection boolean?
 ---@field invert_signs boolean?
 ---@field invert_tabline boolean?
----@field inverse boolean?
+---@field italic ItalicConfig?
 ---@field overrides table<string, HighlightDefinition>?
 ---@field palette_overrides table<string, string>?
+---@field strikethrough boolean?
+---@field terminal_colors boolean?
+---@field transparent_mode boolean?
+---@field undercurl boolean?
+---@field underline boolean?
 Gruvbox.config = {
   terminal_colors = true,
   undercurl = true,
@@ -475,15 +477,22 @@ local function get_groups()
     CocWarningHighlight = { link = "GruvboxOrangeUnderline" },
     CocInfoHighlight = { link = "GruvboxBlueUnderline" },
     CocHintHighlight = { link = "GruvboxAquaUnderline" },
+    SnacksPicker = { link = "GruvboxFg1" },
+    SnacksPickerBorder = { link = "SnacksPicker" },
+    SnacksPickerListCursorLine = { link = "CursorLine" },
+    SnacksPickerMatch = { link = "GruvboxOrange" },
+    SnacksPickerPrompt = { link = "GruvboxRed" },
+    SnacksPickerTitle = { link = "SnacksPicker" },
+    SnacksPickerDir = { link = "GruvboxGray" },
     TelescopeNormal = { link = "GruvboxFg1" },
-    TelescopeSelection = { link = "GruvboxOrangeBold" },
+    TelescopeSelection = { link = "CursorLine" },
     TelescopeSelectionCaret = { link = "GruvboxRed" },
     TelescopeMultiSelection = { link = "GruvboxGray" },
     TelescopeBorder = { link = "TelescopeNormal" },
     TelescopePromptBorder = { link = "TelescopeNormal" },
     TelescopeResultsBorder = { link = "TelescopeNormal" },
     TelescopePreviewBorder = { link = "TelescopeNormal" },
-    TelescopeMatching = { link = "GruvboxBlue" },
+    TelescopeMatching = { link = "GruvboxOrange" },
     TelescopePromptPrefix = { link = "GruvboxRed" },
     TelescopePrompt = { link = "TelescopeNormal" },
     CmpItemAbbr = { link = "GruvboxFg0" },
