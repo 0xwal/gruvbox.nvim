@@ -44,7 +44,7 @@ local Gruvbox = {}
 ---@field transparent_mode boolean?
 ---@field undercurl boolean?
 ---@field underline boolean?
-Gruvbox.config = {
+local default_config = {
   terminal_colors = true,
   undercurl = true,
   underline = true,
@@ -67,6 +67,8 @@ Gruvbox.config = {
   dim_inactive = false,
   transparent_mode = false,
 }
+
+Gruvbox.config = vim.deepcopy(default_config)
 
 -- main gruvbox color palette
 ---@class GruvboxPalette
@@ -374,26 +376,30 @@ local function get_groups()
     Delimiter = { link = "GruvboxOrange" },
     EndOfBuffer = { link = "NonText" },
     DiagnosticError = { link = "GruvboxRed" },
-    DiagnosticSignError = { link = "GruvboxRedSign" },
-    DiagnosticUnderlineError = { link = "GruvboxRedUnderline" },
     DiagnosticWarn = { link = "GruvboxYellow" },
-    DiagnosticSignWarn = { link = "GruvboxYellowSign" },
-    DiagnosticUnderlineWarn = { link = "GruvboxYellowUnderline" },
     DiagnosticInfo = { link = "GruvboxBlue" },
-    DiagnosticSignInfo = { link = "GruvboxBlueSign" },
-    DiagnosticUnderlineInfo = { link = "GruvboxBlueUnderline" },
     DiagnosticHint = { link = "GruvboxAqua" },
+    DiagnosticOk = { link = "GruvboxGreen" },
+    DiagnosticSignError = { link = "GruvboxRedSign" },
+    DiagnosticSignWarn = { link = "GruvboxYellowSign" },
+    DiagnosticSignInfo = { link = "GruvboxBlueSign" },
     DiagnosticSignHint = { link = "GruvboxAquaSign" },
+    DiagnosticSignOk = { link = "GruvboxGreenSign" },
+    DiagnosticUnderlineError = { link = "GruvboxRedUnderline" },
+    DiagnosticUnderlineWarn = { link = "GruvboxYellowUnderline" },
+    DiagnosticUnderlineInfo = { link = "GruvboxBlueUnderline" },
     DiagnosticUnderlineHint = { link = "GruvboxAquaUnderline" },
+    DiagnosticUnderlineOk = { link = "GruvboxGreenUnderline" },
     DiagnosticFloatingError = { link = "GruvboxRed" },
     DiagnosticFloatingWarn = { link = "GruvboxOrange" },
     DiagnosticFloatingInfo = { link = "GruvboxBlue" },
     DiagnosticFloatingHint = { link = "GruvboxAqua" },
+    DiagnosticFloatingOk = { link = "GruvboxGreen" },
     DiagnosticVirtualTextError = { link = "GruvboxRed" },
     DiagnosticVirtualTextWarn = { link = "GruvboxYellow" },
     DiagnosticVirtualTextInfo = { link = "GruvboxBlue" },
     DiagnosticVirtualTextHint = { link = "GruvboxAqua" },
-    DiagnosticOk = { link = "GruvboxGreenSign" },
+    DiagnosticVirtualTextOk = { link = "GruvboxGreen" },
     LspReferenceRead = { link = "GruvboxYellowBold" },
     LspReferenceTarget = { link = "Visual" },
     LspReferenceText = { link = "GruvboxYellowBold" },
@@ -484,6 +490,9 @@ local function get_groups()
     SnacksPickerPrompt = { link = "GruvboxRed" },
     SnacksPickerTitle = { link = "SnacksPicker" },
     SnacksPickerDir = { link = "GruvboxGray" },
+    SnacksPickerPathHidden = { link = "GruvboxGray" },
+    SnacksPickerGitStatusUntracked = { link = "GruvboxGray" },
+    SnacksPickerPathIgnored = { link = "GruvboxBg3" },
     TelescopeNormal = { link = "GruvboxFg1" },
     TelescopeSelection = { link = "CursorLine" },
     TelescopeSelectionCaret = { link = "GruvboxRed" },
@@ -1120,6 +1129,10 @@ local function get_groups()
     MiniTestPass = { link = "GruvboxGreenBold" },
     MiniTrailspace = { bg = colors.red },
     WhichKeyTitle = { link = "NormalFloat" },
+    NeoTreeFloatBorder = { link = "GruvboxGray" },
+    NeoTreeTitleBar = { fg = colors.fg1, bg = colors.bg2 },
+    NeoTreeDirectoryIcon = { link = "GruvboxGreen" },
+    NeoTreeDirectoryName = { link = "GruvboxGreenBold" },
     ["@comment"] = { link = "Comment" },
     ["@none"] = { bg = "NONE", fg = "NONE" },
     ["@preproc"] = { link = "PreProc" },
@@ -1254,6 +1267,39 @@ local function get_groups()
     ["@lsp.type.type"] = { link = "@type" },
     ["@lsp.type.typeParameter"] = { link = "@type.definition" },
     ["@lsp.type.variable"] = { link = "@variable" },
+
+    -- NeoTreeDirectoryName = { link = "Directory" },
+    -- NeoTreeDotfile = { fg = colors.fg4 },
+    -- NeoTreeFadeText1 = { fg = colors.fg3 },
+    -- NeoTreeFadeText2 = { fg = colors.fg4 },
+    -- NeoTreeFileIcon = { fg = colors.blue },
+    -- NeoTreeFileName = { fg = colors.fg1 },
+    -- NeoTreeFileNameOpened = { fg = colors.fg1, bold = true },
+    -- NeoTreeFileStats = { fg = colors.fg3 },
+    -- NeoTreeFileStatsHeader = { fg = colors.fg2, italic = true },
+    -- NeoTreeFilterTerm = { link = "SpecialChar" },
+    -- NeoTreeHiddenByName = { link = "NeoTreeDotfile" },
+    -- NeoTreeIndentMarker = { fg = colors.fg4 },
+    -- NeoTreeMessage = { fg = colors.fg3, italic = true },
+    -- NeoTreeModified = { fg = colors.yellow },
+    -- NeoTreeRootName = { fg = colors.fg1, bold = true, italic = true },
+    -- NeoTreeSymbolicLinkTarget = { link = "NeoTreeFileName" },
+    -- NeoTreeExpander = { fg = colors.fg4 },
+    -- NeoTreeWindowsHidden = { link = "NeoTreeDotfile" },
+    -- NeoTreePreview = { link = "Search" },
+    -- NeoTreeGitAdded = { link = "GitGutterAdd" },
+    -- NeoTreeGitConflict = { fg = colors.orange, bold = true, italic = true },
+    -- NeoTreeGitDeleted = { link = "GitGutterDelete" },
+    -- NeoTreeGitIgnored = { link = "NeoTreeDotfile" },
+    -- NeoTreeGitModified = { link = "GitGutterChange" },
+    -- NeoTreeGitRenamed = { link = "NeoTreeGitModified" },
+    -- NeoTreeGitStaged = { link = "NeoTreeGitAdded" },
+    -- NeoTreeGitUntracked = { fg = colors.orange, italic = true },
+    -- NeoTreeGitUnstaged = { link = "NeoTreeGitConflict" },
+    -- NeoTreeTabActive = { fg = colors.fg1, bold = true },
+    -- NeoTreeTabInactive = { fg = colors.fg4, bg = colors.bg1 },
+    -- NeoTreeTabSeparatorActive = { fg = colors.bg1 },
+    -- NeoTreeTabSeparatorInactive = { fg = colors.bg2, bg = colors.bg1 },
   }
 
   for group, hl in pairs(config.overrides) do
@@ -1270,6 +1316,7 @@ end
 
 ---@param config GruvboxConfig?
 Gruvbox.setup = function(config)
+  Gruvbox.config = vim.deepcopy(default_config)
   Gruvbox.config = vim.tbl_deep_extend("force", Gruvbox.config, config or {})
 end
 
